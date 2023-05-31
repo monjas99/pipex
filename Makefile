@@ -6,11 +6,11 @@
 #    By: david <david@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/03/29 10:00:52 by dmonjas-          #+#    #+#              #
-#    Updated: 2023/05/31 12:14:39 by dmonjas-         ###   ########.fr        #
+#    Updated: 2023/05/31 12:24:30 by dmonjas-         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-NAME = push_swap
+NAME = pipex
 RM = rm -rf
 CC = gcc
 CFLAGS = -Wextra -Wall -Werror #-g3 -fsanitize=address
@@ -23,7 +23,7 @@ INC_DIR = ./inc/
 SRC_DIR = ./src/
 OBJ_DIR = ./obj/
 
-SRC_FILES = 
+SRC_FILES = pipex.c
 SRCS = $(addprefix $(SRC_DIR), $(SRC_FILES))
 
 OBJ_FILES = $(SRC_FILES:.c=.o)
