@@ -6,7 +6,7 @@
 /*   By: dmonjas- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/31 12:22:05 by dmonjas-          #+#    #+#             */
-/*   Updated: 2023/06/12 12:41:10 by dmonjas-         ###   ########.fr       */
+/*   Updated: 2023/06/12 14:04:35 by dmonjas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ char	**ft_get_envp(char **envp)
 	return (path);
 }
 
-char	*ft_cmd(t_list pipex)
+char	*ft_cmd(t_pipex pipex)
 {
 	int		i;
 	char	*tmp;
@@ -43,29 +43,46 @@ char	*ft_cmd(t_list pipex)
 	tmp = ft_strjoin("/", pipex.cmd[0]);
 	while (pipex.envp[i])
 	{
-		//path = join(envp y tmp
-		if ()//acces con la variable path
+		path = ft_strjoin(pipex.envp[i], tmp);
+		free(tmp);
+		if (access(path, F_OK == 0))
+			return (path);
 		i++;
 	}
-	return (path);
+	return (0);
 }
 
-void	ft_command(t_list pipex, char **av, char **envp)
+void	ft_command(t_pipex pipex, char **av, char **envp)
 {
 	pipex.pid_1 = fork();
-	if (pipex.pid_1 == 0) //Hijo
+	if (pipex.pid_1 == 0)
 	{
-		close(pipex.fd[0]);
+		close(pipex.pipefd[0]);
 		dup2(pipex.pipefd[1], STDOUT_FILENO);
 		dup2(pipex.infile, STDIN_FILENO);
-		pipex.cmd = ft_split(av[2], " ");
+		pipex.cmd = ft_split(av[2], ' ');
 		pipex.path	= ft_cmd(pipex);
-
+		execve(pipex.path, pipex.cmd, envp);
+		perror("Erorr en execve:");
+		exit(1);
 	}
-	else //Padre
+	//free(pipex.path);
+	pipex.pid_2 = fork();
+	if (pipex.pid_2 == 0)
 	{
-	
+		close(pipex.pipefd[1]);
+		dup2(pipex.pipefd[0], STDIN_FILENO);
+		dup2(pipex.outfile, STDOUT_FILENO);
+		pipex.cmd = ft_split(av[3], ' ');
+		pipex.path = ft_cmp(pipex);
+		execve(pipex.path, pipex.cmd, envp);
+		perror("Error en execve:");
+		exit(1);
 	}
+	close(pipex.pipefd[0]);
+	close(pipex.pipefd[1]);
+	waitpid(pipex.pid_1, NULL, 1);
+	waitpid(pipex.pid_2, NULL, 1);
 }
 
 void	ft_pipex(char **av, char **envp)
