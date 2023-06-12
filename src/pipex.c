@@ -44,9 +44,12 @@ char	*ft_cmd(t_pipex pipex)
 	while (pipex.envp[i])
 	{
 		path = ft_strjoin(pipex.envp[i], tmp);
-		free(tmp);
-		if (access(path, F_OK == 0))
+		if (access(path, F_OK) == 0)
+		{
+			free(tmp);	
 			return (path);
+		}
+		free(path);
 		i++;
 	}
 	return (0);
@@ -62,11 +65,13 @@ void	ft_command(t_pipex pipex, char **av, char **envp)
 		dup2(pipex.infile, STDIN_FILENO);
 		pipex.cmd = ft_split(av[2], ' ');
 		pipex.path	= ft_cmd(pipex);
+		if (!pipex.path)
+		{
+			perror("Error en execve:");
+			exit(1);
+		}
 		execve(pipex.path, pipex.cmd, envp);
-		perror("Erorr en execve:");
-		exit(1);
 	}
-	//free(pipex.path);
 	pipex.pid_2 = fork();
 	if (pipex.pid_2 == 0)
 	{
@@ -74,15 +79,18 @@ void	ft_command(t_pipex pipex, char **av, char **envp)
 		dup2(pipex.pipefd[0], STDIN_FILENO);
 		dup2(pipex.outfile, STDOUT_FILENO);
 		pipex.cmd = ft_split(av[3], ' ');
-		pipex.path = ft_cmp(pipex);
+		pipex.path = ft_cmd(pipex);
+		if (!pipex.path)
+		{
+			perror("Error en execve:");
+			exit(1);
+		}
 		execve(pipex.path, pipex.cmd, envp);
-		perror("Error en execve:");
-		exit(1);
 	}
 	close(pipex.pipefd[0]);
 	close(pipex.pipefd[1]);
-	waitpid(pipex.pid_1, NULL, 1);
-	waitpid(pipex.pid_2, NULL, 1);
+	waitpid(pipex.pid_1, NULL, 0);
+	waitpid(pipex.pid_2, NULL, 0);
 }
 
 void	ft_pipex(char **av, char **envp)
@@ -91,13 +99,13 @@ void	ft_pipex(char **av, char **envp)
 
 	pipex.infile = open(av[1], O_RDONLY);
 	if (pipex.infile < 0)
-		perror("Error infile");
+		return (perror("Error infile"));
 	pipex.outfile = open(av[4], O_TRUNC | O_CREAT | O_RDWR, 0644);
 	if (pipex.outfile < 0)
-		perror("Error outfile");
+		return (perror("Error outfile"));
 	pipe(pipex.pipefd);
 	pipex.envp = ft_get_envp(envp);
-	ft_command(pipex, av, envp);	
+	ft_command(pipex, av, envp);
 }
 
 int	main(int ac, char **av, char **envp)

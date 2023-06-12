@@ -13,7 +13,7 @@
 NAME = pipex
 RM = rm -rf
 CC = gcc
-CFLAGS = -Wextra -Wall #-Werror -g3 -fsanitize=address
+CFLAGS = -Wextra -Wall -Werror -g3 -fsanitize=address
 
 LIBFT_DIR = ./libft/
 LIBFT = ./libft/libft.a
