@@ -6,7 +6,7 @@
 #    By: david <david@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/03/29 10:00:52 by dmonjas-          #+#    #+#              #
-#    Updated: 2023/06/06 11:47:34 by dmonjas-         ###   ########.fr        #
+#    Updated: 2023/06/12 17:01:43 by david            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -23,7 +23,7 @@ INC_DIR = ./inc/
 SRC_DIR = ./src/
 OBJ_DIR = ./obj/
 
-SRC_FILES = pipex.c
+SRC_FILES = pipex.c child_command.c
 SRCS = $(addprefix $(SRC_DIR), $(SRC_FILES))
 
 OBJ_FILES = $(SRC_FILES:.c=.o)
