@@ -6,7 +6,7 @@
 /*   By: dmonjas- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/19 11:54:12 by dmonjas-          #+#    #+#             */
-/*   Updated: 2023/06/19 12:20:24 by dmonjas-         ###   ########.fr       */
+/*   Updated: 2023/06/19 12:25:28 by dmonjas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ void	ft_free_child(char *path, char **cmd)
 		free (cmd[i]);
 		i++;
 	}
- 	free (path);
+	free (path);
 }
 
 void	ft_close_parent(t_pipex *pipex)
@@ -39,7 +39,7 @@ void	ft_close_parent(t_pipex *pipex)
 	}
 }
 
-void    ft_error(char *str)
+void	ft_error(char *str)
 {
 	str = ft_strjoin(strerror(errno), ft_strjoin(": ", str));
 	write (2, str, ft_strlen(str));
