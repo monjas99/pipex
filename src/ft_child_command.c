@@ -35,7 +35,7 @@ void	ft_command(t_pipex pipex, char **av, char **envp)
 		pipex.path = ft_cmd(pipex);
 		if (!pipex.path)
 		{
-			perror("Error en execve:");
+			ft_error(av[2]);
 			exit(1);
 		}
 		execve(pipex.path, pipex.cmd, envp);
@@ -54,7 +54,7 @@ void	ft_command2(t_pipex pipex, char **av, char **envp)
 		pipex.path = ft_cmd(pipex);
 		if (!pipex.path)
 		{
-			perror("Error en execve:");
+			//ft_str_error("Command not found:\n");
 			exit(1);
 		}
 		execve(pipex.path, pipex.cmd, envp);

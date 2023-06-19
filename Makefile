@@ -6,14 +6,14 @@
 #    By: david <david@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/03/29 10:00:52 by dmonjas-          #+#    #+#              #
-#    Updated: 2023/06/12 17:01:43 by david            ###   ########.fr        #
+#    Updated: 2023/06/19 09:49:31 by david            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = pipex
 RM = rm -rf
 CC = gcc
-CFLAGS = -Wextra -Wall -Werror -g3 -fsanitize=address
+CFLAGS = -Wextra -Wall -Werror #-g3 -fsanitize=address
 
 LIBFT_DIR = ./libft/
 LIBFT = ./libft/libft.a
@@ -23,7 +23,7 @@ INC_DIR = ./inc/
 SRC_DIR = ./src/
 OBJ_DIR = ./obj/
 
-SRC_FILES = pipex.c child_command.c
+SRC_FILES = ft_pipex.c ft_child_command.c ft_error.c
 SRCS = $(addprefix $(SRC_DIR), $(SRC_FILES))
 
 OBJ_FILES = $(SRC_FILES:.c=.o)
