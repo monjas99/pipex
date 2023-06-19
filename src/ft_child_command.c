@@ -35,8 +35,9 @@ void	ft_command(t_pipex pipex, char **av, char **envp)
 		pipex.path = ft_cmd(pipex);
 		if (!pipex.path)
 		{
-			ft_error(av[2]);
-			exit(1);
+			ft_str_error("command not found: ", pipex.cmd[0]);
+			ft_free_child(pipex.path, pipex.cmd);
+			exit (1);
 		}
 		execve(pipex.path, pipex.cmd, envp);
 	}
@@ -54,8 +55,9 @@ void	ft_command2(t_pipex pipex, char **av, char **envp)
 		pipex.path = ft_cmd(pipex);
 		if (!pipex.path)
 		{
-			//ft_str_error("Command not found:\n");
-			exit(1);
+			ft_str_error("command not found: ", pipex.cmd[0]);
+			ft_free_child(pipex.path, pipex.cmd);
+			exit (1);
 		}
 		execve(pipex.path, pipex.cmd, envp);
 	}
