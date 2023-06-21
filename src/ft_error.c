@@ -6,7 +6,7 @@
 /*   By: dmonjas- <dmonjas-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/19 11:54:12 by dmonjas-          #+#    #+#             */
-/*   Updated: 2023/06/21 14:45:42 by dmonjas-         ###   ########.fr       */
+/*   Updated: 2023/06/21 14:56:25 by dmonjas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ void	ft_error(char *cmd)
 	free (str);
 }
 
-void ft_err(char *av)
+void	ft_err(char *av)
 {
 	perror(av);
 	exit (EXIT_FAILURE);
