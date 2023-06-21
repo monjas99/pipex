@@ -3,21 +3,25 @@
 /*                                                        :::      ::::::::   */
 /*   ft_child_command.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dmonjas- <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: dmonjas- <dmonjas-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/19 12:24:30 by dmonjas-          #+#    #+#             */
-/*   Updated: 2023/06/19 12:24:39 by dmonjas-         ###   ########.fr       */
+/*   Updated: 2023/06/21 14:51:50 by dmonjas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
 
-char	*ft_cmd(t_pipex pipex)
+char	*ft_cmd(t_pipex pipex, char *av)
 {
 	int		i;
 	char	*tmp;
 	char	*path;
 
+	if (access(av, X_OK) == 0)
+		return (av);
+	if (!pipex.envp)
+		return (NULL);
 	i = 0;
 	tmp = ft_strjoin("/", pipex.cmd[0]);
 	while (pipex.envp[i])
@@ -31,7 +35,8 @@ char	*ft_cmd(t_pipex pipex)
 		free(path);
 		i++;
 	}
-	return (0);
+	free (tmp);
+	return (NULL);
 }
 
 void	ft_command(t_pipex pipex, char **av, char **envp)
@@ -43,14 +48,14 @@ void	ft_command(t_pipex pipex, char **av, char **envp)
 		dup2(pipex.pipefd[1], STDOUT_FILENO);
 		dup2(pipex.infile, STDIN_FILENO);
 		pipex.cmd = ft_split(av[2], ' ');
-		pipex.path = ft_cmd(pipex);
+		pipex.path = ft_cmd(pipex, av[2]);
 		if (!pipex.path)
 		{
-			ft_str_error("command not found: ", pipex.cmd[0]);
-			ft_free_child(pipex.path, pipex.cmd);
-			exit (1);
+			ft_error(pipex.cmd[0]);
+			exit (EXIT_FAILURE);
 		}
-		execve(pipex.path, pipex.cmd, envp);
+		if (execve(pipex.path, pipex.cmd, envp) == -1)
+			perror ("");
 	}
 }
 
@@ -63,13 +68,13 @@ void	ft_command2(t_pipex pipex, char **av, char **envp)
 		dup2(pipex.pipefd[0], STDIN_FILENO);
 		dup2(pipex.outfile, STDOUT_FILENO);
 		pipex.cmd = ft_split(av[3], ' ');
-		pipex.path = ft_cmd(pipex);
+		pipex.path = ft_cmd(pipex, av[3]);
 		if (!pipex.path)
 		{
-			ft_str_error("command not found: ", pipex.cmd[0]);
-			ft_free_child(pipex.path, pipex.cmd);
-			exit (1);
+			ft_error(pipex.cmd[0]);
+			exit (EXIT_FAILURE);
 		}
-		execve(pipex.path, pipex.cmd, envp);
+		if (execve(pipex.path, pipex.cmd, envp) == -1)
+			perror ("");
 	}
 }

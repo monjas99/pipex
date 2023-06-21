@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_error.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dmonjas- <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: dmonjas- <dmonjas-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/19 11:54:12 by dmonjas-          #+#    #+#             */
-/*   Updated: 2023/06/19 12:25:28 by dmonjas-         ###   ########.fr       */
+/*   Updated: 2023/06/21 14:45:42 by dmonjas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,31 +27,22 @@ void	ft_free_child(char *path, char **cmd)
 
 void	ft_close_parent(t_pipex *pipex)
 {
-	int	i;
-
 	close(pipex->infile);
 	close(pipex->outfile);
-	i = 0;
-	while (pipex->envp[i])
-	{
-		free (pipex->envp[i]);
-		i++;
-	}
 }
 
-void	ft_error(char *str)
+void	ft_error(char *cmd)
 {
-	str = ft_strjoin(strerror(errno), ft_strjoin(": ", str));
-	write (2, str, ft_strlen(str));
-	write (2, "\n", 1);
-	free(str);
-}
+	char	*str;
 
-int	ft_str_error(char *str, char *cmd)
-{
-	str = ft_strjoin(str, cmd);
+	str = ft_strjoin(cmd, ": command not found");
 	write (2, str, ft_strlen(str));
 	write (2, "\n", 1);
 	free (str);
-	return (2);
+}
+
+void ft_err(char *av)
+{
+	perror(av);
+	exit (EXIT_FAILURE);
 }

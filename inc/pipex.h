@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipex.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: david <david@student.42.fr>                +#+  +:+       +#+        */
+/*   By: dmonjas- <dmonjas-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/31 12:11:54 by dmonjas-          #+#    #+#             */
-/*   Updated: 2023/06/19 12:11:37 by dmonjas-         ###   ########.fr       */
+/*   Updated: 2023/06/21 13:08:30 by dmonjas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,9 +31,9 @@ typedef struct s_pipex
 
 void	ft_command(t_pipex pipex, char **av, char **envp);
 void	ft_command2(t_pipex pipex, char **av, char **envp);
-void	ft_error(char *str);
 void	ft_free_child(char *path, char **cmd);
 void	ft_close_parent(t_pipex *pipex);
-char	*ft_cmd(t_pipex pipex);
-int		ft_str_error(char *str, char *cmd);
+char	*ft_cmd(t_pipex pipex, char *av);
+void	ft_error(char *cmd);
+void	ft_err(char *av);
 #endif
