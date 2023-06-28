@@ -6,7 +6,7 @@
 /*   By: dmonjas- <dmonjas-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/31 12:22:05 by dmonjas-          #+#    #+#             */
-/*   Updated: 2023/06/21 13:38:38 by dmonjas-         ###   ########.fr       */
+/*   Updated: 2023/06/28 10:52:52 by dmonjas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ void	ft_pipex(char **av, char **envp)
 		ft_err(av[1]);
 	pipex.outfile = open(av[4], O_TRUNC | O_CREAT | O_RDWR, 0644);
 	if (pipex.outfile < 0)
-		perror(av[4]);
+		ft_err(av[4]);
 	if (pipe(pipex.pipefd) < 0)
 		return (perror("Pipe"));
 	pipex.envp = ft_get_envp(envp);

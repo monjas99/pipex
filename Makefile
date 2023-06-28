@@ -6,14 +6,14 @@
 #    By: david <david@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/03/29 10:00:52 by dmonjas-          #+#    #+#              #
-#    Updated: 2023/06/19 12:19:52 by dmonjas-         ###   ########.fr        #
+#    Updated: 2023/06/28 10:51:01 by dmonjas-         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = pipex
 RM = rm -rf
 CC = gcc
-CFLAGS = -Wextra -Wall -Werror -g3 -fsanitize=address
+CFLAGS = -Wextra -Wall #-Werror -g3 -fsanitize=address
 
 LIBFT_DIR = ./libft/
 LIBFT = ./libft/libft.a
